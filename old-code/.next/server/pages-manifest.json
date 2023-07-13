@@ -1,8 +1,9 @@
 {
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
-  "/AIArt": "pages/AIArt.js",
-  "/Home": "pages/Home.js",
+  "/_document": "pages/_document.js",
+  "/login": "pages/login.js",
   "/": "pages/index.js",
-  "/_document": "pages/_document.js"
+  "/author": "pages/author.js",
+  "/signUp": "pages/signUp.js"
 }
