@@ -1,114 +1,78 @@
-// NFT Auction Contract
+import NonFungibleToken from 0x631e88ae7f1d7c20
 
-import FlowFees from 0xFLOW0xSTORAGE
+pub contract NFTAuction: NonFungibleToken {
 
-pub contract NFTAuction {
+    pub var totalSupply: UInt64
 
-    // NFT struct
-    pub struct NFT {
+    pub event ContractInitialized()
+    pub event Withdraw(id: UInt64, from: Address?)
+    pub event Deposit(id: UInt64, to: Address?)
+
+    pub resource NFT: NonFungibleToken.INFT {
         pub let id: UInt64
-        pub let owner: Address
-        pub var currentBid: UFix64
-        pub var highestBidder: Address
+        pub let ipfsHash: String
+        pub var metadata: {String: String}
+
+        init(_ipfsHash: String, _metadata: {String: String}) {
+            self.id = NFTAuction.totalSupply
+            NFTAuction.totalSupply = NFTAuction.totalSupply + 1
+
+            self.ipfsHash = _ipfsHash
+            self.metadata = _metadata
+        }
     }
 
-    // Public NFT collection
-    pub var nfts: [UInt64: NFT]
-
-    // Event emitted when an NFT is listed for auction
-    pub event NFTListed(
-        id: UInt64,
-        owner: Address,
-        startingBid: UFix64
-    )
-
-    // Event emitted when a bid is placed on an NFT
-    pub event BidPlaced(
-        id: UInt64,
-        bidder: Address,
-        bidAmount: UFix64
-    )
-
-    // Event emitted when an auction ends
-    pub event AuctionEnded(
-        id: UInt64,
-        winner: Address,
-        winningBid: UFix64
-    )
-
-    // Function to list an NFT for auction
-    pub fun listNFTForAuction(id: UInt64, startingBid: UFix64) {
-        let owner = getAccountAddress()
-
-        // Create a new NFT and add it to the collection
-        let newNFT = NFT(
-            id: id,
-            owner: owner,
-            currentBid: startingBid,
-            highestBidder: owner
-        )
-
-        self.nfts[id] = newNFT
-
-        // Emit the NFTListed event
-        emit NFTListed(id: id, owner: owner, startingBid: startingBid)
+    pub resource interface CollectionPublic {
+        pub fun borrowEntireNFT(id: UInt64): &NFTAuction.NFT
     }
 
-    // Function to place a bid on an NFT auction
-    pub fun placeBid(id: UInt64, bidAmount: UFix64) {
-        let bidder = getAccountAddress()
+    pub resource Collection: NonFungibleToken.Receiver, NonFungibleToken.Provider, NonFungibleToken.CollectionPublic, CollectionPublic {
 
-        // Get the NFT from the collection
-        let nft = self.nfts[id]
+        pub var ownedNFTs: @{UInt64: NonFungibleToken.NFT}
 
-        // Validate the bid amount
-        if bidAmount <= nft.currentBid {
-            panic("Bid amount must be higher than the current bid")
+        pub fun deposit(token: @NonFungibleToken.NFT){
+            let myToken <- token as! @NFTAuction.NFT
+            emit Deposit(id: myToken.id, to: self.owner?.address)
+            self.ownedNFTs[myToken.id] <-! myToken
         }
 
-        // Transfer the previous highest bid amount back to the previous bidder
-        if nft.highestBidder != nft.owner {
-            FlowFees.deposit(from: account.address(to: nft.highestBidder), amount: nft.currentBid)
+        pub fun withdraw(withdrawID: UInt64): @NonFungibleToken.NFT {
+            let token <- self.ownedNFTs.remove(key: withdrawID) ?? panic("This NFT does not exist")
+            emit Withdraw(id: token.id, from: self.owner?.address)
+            return <-token
         }
 
-        // Update the current bid and highest bidder
-        nft.currentBid = bidAmount
-        nft.highestBidder = bidder
-
-        // Update the NFT in the collection
-        self.nfts[id] = nft
-
-        // Emit the BidPlaced event
-        emit BidPlaced(id: id, bidder: bidder, bidAmount: bidAmount)
-    }
-
-    // Function to end an NFT auction and transfer the NFT to the highest bidder
-    pub fun endAuction(id: UInt64) {
-        let nft = self.nfts[id]
-
-        // Transfer the NFT to the highest bidder
-        let highestBidder = nft.highestBidder
-        let owner = nft.owner
-
-        // Transfer the NFT ownership
-        owner.save(<-highestBidder.load("nfts"), to: /storage/nfts)
-        highestBidder.save(id, to: /storage/nfts)
-
-        // Transfer the bid amount to the NFT owner
-        FlowFees.deposit(from: account.address(to: highestBidder), amount: nft.currentBid)
-
-        // Remove the NFT from the collection
-        self.nfts.remove(key: id)
-
-        // Emit the AuctionEnded event
-        emit AuctionEnded(id: id, winner: highestBidder, winningBid: nft.currentBid)
-    }
-
-    // Function to get the account address of the current transaction
-    pub fun getAccountAddress(): Address {
-        let address = getTransaction{ 
-            getAccount(addrs: AuthAccount.address).address 
+        pub fun getIDs(): [UInt64] {
+            return self.ownedNFTs.keys
         }
-        return address
+
+        pub fun borrowNFT(id: UInt64): &NonFungibleToken.NFT {
+            return (&self.ownedNFTs[id] as &NonFungibleToken.NFT?)!
+        }
+
+        pub fun borrowEntireNFT(id: UInt64): &NFTAuction.NFT {
+            let reference = &self.ownedNFTs[id] as auth &NonFungibleToken.NFT?
+            return reference as! &NFTAuction.NFT
+        }
+
+        init() {
+            self.ownedNFTs <- {}
+        }
+
+        destroy() {
+            destroy self.ownedNFTs
+        }
+    }
+
+    pub fun createEmptyCollection(): @Collection {
+        return <-create Collection()
+    }
+
+    pub fun createToken(ipfsHash: String, metadata: {String: String}): @NFTAuction.NFT {
+        return <-create NFT(_ipfsHash: ipfsHash, _metadata: metadata)
+    }
+
+    init() {
+        self.totalSupply = 0
     }
 }
