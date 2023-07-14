@@ -1,16 +1,5 @@
 {
   "/_app": "pages/_app.js",
-  "/NFT-details": "pages/NFT-details.html",
-  "/account": "pages/account.html",
-  "/author": "pages/author.html",
-  "/collection": "pages/collection.html",
-  "/connectWallet": "pages/connectWallet.html",
-  "/": "pages/index.html",
-  "/login": "pages/login.html",
-  "/searchPage": "pages/searchPage.html",
-  "/signUp": "pages/signUp.html",
-  "/uploadNFT": "pages/uploadNFT.html",
   "/_error": "pages/_error.js",
-  "/_document": "pages/_document.js",
-  "/404": "pages/404.html"
+  "/_document": "pages/_document.js"
 }
