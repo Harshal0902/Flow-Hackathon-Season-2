@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link';
 import { HiOutlineMenuAlt3, HiX } from "react-icons/hi";
 import * as fcl from "@onflow/fcl";
-import * as t from "@onflow/types";
 
 export default function Navbar() {
 
@@ -27,9 +26,12 @@ export default function Navbar() {
       .put('accessNode.api', 'https://access-testnet.onflow.org')
       .put('0xProfile', '0xPROFILE_CONTRACT_ADDRESS')
       .put("discovery.wallet", "https://fcl-discovery.onflow.org/testnet/authn")
-      .put("accessNode.api", "https://access-testnet.onflow.org")
       .put("discovery.authn.endpoint", "https://fcl-discovery.onflow.org/api/testnet/authn")
+      .put("app.detail.title", "APP NAME")
   }, []);
+
+  const [services, setServices] = useState([])
+  useEffect(() => fcl.discovery.authn.subscribe(res => setServices(res.results)), [])
 
   return (
     <div >
@@ -107,7 +109,7 @@ export default function Navbar() {
             </div>) :
               <button className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded items-center justify-center bg-tertiary cursor-pointer text-white" onClick={() => handleWalletLogin()}>Log In</button>
             }
-            
+
           </div>
         </div>
       </nav>

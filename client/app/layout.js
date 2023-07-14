@@ -1,6 +1,6 @@
 import './globals.css'
 import { Montserrat } from 'next/font/google'
-import Navbar from '../components/Navbar'
+import Navbar from './components/Navbar'
 
 const inter = Montserrat({ subsets: ['latin'] })
 
