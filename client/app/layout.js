@@ -5,7 +5,7 @@ import Navbar from './components/Navbar'
 const inter = Montserrat({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'APP NAME',
+  title: 'GameSorceryFLOW',
   description: 'An gaming asset NFT marketplace.',
 }
 

@@ -27,7 +27,7 @@ export default function Navbar() {
       .put('0xProfile', '0xPROFILE_CONTRACT_ADDRESS')
       .put("discovery.wallet", "https://fcl-discovery.onflow.org/testnet/authn")
       .put("discovery.authn.endpoint", "https://fcl-discovery.onflow.org/api/testnet/authn")
-      .put("app.detail.title", "APP NAME")
+      .put("app.detail.title", "GameSorceryFLOW")
   }, []);
 
   const [services, setServices] = useState([])
@@ -36,7 +36,7 @@ export default function Navbar() {
   return (
     <div >
       <nav className="flex items-center py-2 flex-wrap px-4 text-fontColor tracking-wider">
-        <Link href="/"><span className="p-2 mr-4 inline-flex items-center text-4xl md:text-5xl cursor-pointer font-base text-white">APP NAME
+        <Link href="/"><span className="p-2 mr-4 inline-flex items-center text-4xl md:text-5xl cursor-pointer font-base text-white">GameSorceryFLOW
         </span></Link>
         <button className="lg:hidden right-0 absolute md:px-8 px-6 mr-1 mb-1 ease-linear transition-all duration-150" type="button" onClick={() => setShowNavbar(true)} aria-hidden="false" aria-label="button">
           <HiOutlineMenuAlt3 className="h-7 w-7" aria-hidden="false" />
@@ -50,7 +50,7 @@ export default function Navbar() {
                   <div className="flex items-start justify-between p-5 border-solid rounded-t">
                     <Link href='/'>
                       <div className="text-2xl font-base tracking-wide cursor-pointer">
-                        APP NAME
+                        GameSorceryFLOW
                       </div>
                     </Link>
 
