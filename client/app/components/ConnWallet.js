@@ -23,7 +23,7 @@ export default function ConnWallet() {
         .put('0xProfile', '0xPROFILE_CONTRACT_ADDRESS')
         .put("discovery.wallet", "https://fcl-discovery.onflow.org/testnet/authn")
         .put("discovery.authn.endpoint", "https://fcl-discovery.onflow.org/api/testnet/authn")
-        .put("app.detail.title", "GameSorceryFLOW")
+        .put("app.detail.title", "GameSorcery")
     }, []);
 
   return (

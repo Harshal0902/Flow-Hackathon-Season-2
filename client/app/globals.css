@@ -13,16 +13,16 @@ body {
 
 ::-webkit-scrollbar {
   width: 0.5rem;
-  border: 1px solid black;
+  border: 1px solid #179e17;
 }
 
 ::-webkit-scrollbar-track {
   border-radius: 0;
-  background-color: black;
+  background-color: #90EE90;
 }
 
 ::-webkit-scrollbar-thumb {
   border-radius: 2rem;
-  background: black;
+  background: #179e17;
   width: 0.5rem;
 }

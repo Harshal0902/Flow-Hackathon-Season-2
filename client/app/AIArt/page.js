@@ -48,7 +48,7 @@ function AIArt() {
     <div>
       <div>
         <div className="grid place-items-center">
-          <h1 className="text-6xl text-white text-center">AI Assets Generator</h1>
+          <h1 className="text-6xl text-center">AI Assets Generator</h1>
           <div className="bg-secondary w-96 h-1 my-2 rounded-md"></div>
         </div>
 
@@ -69,7 +69,7 @@ function AIArt() {
           </button>
         </form>
       </div>
-      {loading && <div className="text-center py-12 text-gray-200">Loading...</div>}
+      {loading && <div className="text-center py-12 text-gray-800">Loading...</div>}
 
       {imageUrl && !loading && (
         <div className="my-12 grid place-items-center">

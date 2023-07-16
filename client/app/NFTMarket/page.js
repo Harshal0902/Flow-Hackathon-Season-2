@@ -16,7 +16,7 @@ export default function page() {
     return (
         <div>
             <div className="grid place-items-center">
-                <h1 className="text-6xl text-white text-center">NFT Marketplace</h1>
+                <h1 className="text-6xl text-center">NFT Marketplace</h1>
                 <div className="bg-secondary w-96 h-1 my-2 rounded-md"></div>
 
 

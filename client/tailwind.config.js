@@ -8,9 +8,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: "#1B2431",
+        primary: "#43B395",
         secondary: "#016795",
-        tertiary: "#1E488F",
+        tertiary: "#BDF8A3",
       },
       zIndex: {
         "-1": "-1",
