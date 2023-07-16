@@ -32,7 +32,7 @@ export default function NFTAuctionComponent() {
     try {
       const added = await ipfsClient.add(JSON.stringify(metadata));
       const hash = added.path;
-
+  
       const transactionId = await fcl.send([
         fcl.transaction`
           import NFTAuction from ${contractAddress}
@@ -49,14 +49,14 @@ export default function NFTAuctionComponent() {
         `,
         fcl.args([
           fcl.arg(hash, t.String),
-          fcl.arg(metadata, t.Dictionary(t.String, t.String)), // Modify this line
+          fcl.arg(metadata, t.Dictionary(t.String, t.String)), // <- This line has been updated
         ]),
         fcl.proposer(fcl.currentUser().authorization),
         fcl.payer(fcl.currentUser().authorization),
         fcl.authorizations([fcl.currentUser().authorization]),
         fcl.limit(9999),
       ]).then(fcl.decode);
-
+  
       console.log('Transaction ID:', transactionId);
     } catch (error) {
       console.error('Error creating token:', error);
