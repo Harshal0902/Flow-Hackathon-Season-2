@@ -1,12 +1,16 @@
 import React from "react"
 import Link from "next/link"
 import Image from "next/image"
+import Navbar from "./components/Navbar"
 
 export default function Page() {
 
   return (
     <div className='md:mx-28 mx-4 text-white pt-10 pb-12'>
 
+      <nav className="flex items-center justify-between w-10/12  lg:w-11/12 m-auto">
+        <Navbar/>
+      </nav>
       <div className='md:grid md:grid-cols-2 items-center'>
         <div className=''>
           <h1 className='text-3xl md:text-6xl'>Who we are</h1>

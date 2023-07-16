@@ -102,14 +102,6 @@ export default function Navbar() {
             <Link href="/AIArt">
               <span className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded items-center justify-center dark:hover:bg-navHover hover:bg-secondary cursor-pointer text-white">AI Asset</span>
             </Link>
-
-            {user && user.addr ? (<div className=''>
-              <button className="lg:inline-flex lg:w-auto w-full mx-2 px-3 py-2 rounded items-center justify-center bg-tertiary text-white">Address: {user.addr}</button>
-              <button className="lg:inline-flex lg:w-auto w-full mx-2 px-3 py-2 rounded items-center justify-center bg-tertiary cursor-pointer text-white" onClick={() => fcl.unauthenticate()}>Log Out</button>
-            </div>) :
-              <button className="lg:inline-flex lg:w-auto w-full px-3 py-2 rounded items-center justify-center bg-tertiary cursor-pointer text-white" onClick={() => handleWalletLogin()}>Log In</button>
-            }
-
           </div>
         </div>
       </nav>
