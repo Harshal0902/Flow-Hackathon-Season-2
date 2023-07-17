@@ -65,7 +65,7 @@ export default function MinyNFT() {
                                 type="text"
                                 onChange={(e) => setNameOfNFT(e.target.value)}
                                 className="block w-full px-4 py-4 mt-2 text-base placeholder-gray-400 bg-white border border-gray-300 rounded-md focus:outline-none focus:border-black"
-                                placeholder="John"
+                                placeholder="NFT Name"
                             />
                         </div>
                         <div className="relative">
